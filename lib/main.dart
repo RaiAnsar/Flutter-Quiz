@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import './question.dart';
-import './answer.dart';
+import 'package:flutter_quiz/quiz.dart';
+import 'package:flutter_quiz/result.dart';
 
 void main() => runApp(MyApp());
 
@@ -59,9 +59,6 @@ class _MyAppState extends State<MyApp> {
   nextQ() {
     setState(() {
       _qustionIndex++;
-      if (_qustionIndex >= 7) {
-        _qustionIndex = 0;
-      }
     });
   }
 
@@ -69,22 +66,18 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
+        backgroundColor: Color(0xFF34F2),
         appBar: AppBar(
           title: Text('Flutter Quiz'),
         ),
         body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Question(
-                _questions[_qustionIndex]['question'],
-              ),
-              ...(_questions[_qustionIndex]['answers'] as List<String>)
-              .map((answer) {
-                return Answer(nextQ, answer);
-              }).toList()
-            ],
-          ),
+          child: _qustionIndex < _questions.length
+              ? Quiz(
+                  questions: _questions,
+                  questionIndex: _qustionIndex,
+                  nextQuestion: nextQ,
+                )
+              : Result(),
         ),
       ),
     );
