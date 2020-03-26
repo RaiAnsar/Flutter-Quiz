@@ -12,51 +12,47 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   var _questions = [
     {
-      'question': 'What is the national day of Pakistan?',
-      'answers': ["23rd March", "14th August", "25th December", "21st May"]
-    },
-    {
-      'question': 'How many people live in Pakistan?',
-      'answers': ["21 Million", "220 Million", "160 Million", "1.6 Billion"]
-    },
-    {
-      'question': 'Which technology is the best for Mobile App Development?',
+      'questionText': 'What\'s your favorite color?',
       'answers': [
-        "Flutter",
-        "Flutter with Dart",
-        "React Naitive",
-        "Xamarin Forms"
-      ]
+        {'text': 'Black', 'score': 10},
+        {'text': 'Red', 'score': 5},
+        {'text': 'Green', 'score': 3},
+        {'text': 'White', 'score': 1},
+      ],
     },
     {
-      'question': 'Who is president of Pakistan?',
-      'answers': ["Raja Zia ul Haq", "Tariq Jameel", "Bajwa Jee", "Fawad CH"]
-    },
-    {
-      'question': 'What is the national day of America?',
-      'answers': ["1st June", "4th July", "6th October", "24th December"]
-    },
-    {
-      'question': 'How many people live in India?',
-      'answers': ["2.2 Billion", "6 Billion", "1.28 Billion", "0.8 Billion"]
-    },
-    {
-      'question': 'Which technology is the best for Web Development?',
-      'answers': ["ReactJS", "PHP", "HTML & CSS + JS", "Flutter"]
-    },
-    {
-      'question': 'Who is president of Turkey?',
+      'questionText': 'What\'s your favorite animal?',
       'answers': [
-        "Eisa Bookhaari",
-        "Rajap Tayapp Ordgan",
-        "Colonel Gaddafi",
-        "Altaf Hussain"
-      ]
+        {'text': 'Rabbit', 'score': 3},
+        {'text': 'Snake', 'score': 11},
+        {'text': 'Elephant', 'score': 5},
+        {'text': 'Lion', 'score': 9},
+      ],
+    },
+    {
+      'questionText': 'Who\'s your favorite instructor?',
+      'answers': [
+        {'text': 'Max', 'score': 1},
+        {'text': 'Max', 'score': 1},
+        {'text': 'Max', 'score': 1},
+        {'text': 'Max', 'score': 1},
+      ],
     },
   ];
 
   int _qustionIndex = 0;
-  nextQ() {
+  int _totalScore = 0;
+
+  resetQuiz() {
+    setState(() {
+      _qustionIndex = 0;
+      _totalScore = 0;
+    });
+  }
+
+  nextQuestion(int score) {
+    _totalScore += score;
+
     setState(() {
       _qustionIndex++;
     });
@@ -75,9 +71,9 @@ class _MyAppState extends State<MyApp> {
               ? Quiz(
                   questions: _questions,
                   questionIndex: _qustionIndex,
-                  nextQuestion: nextQ,
+                  nextQuestion: nextQuestion,
                 )
-              : Result(),
+              : Result(_totalScore, resetQuiz),
         ),
       ),
     );
